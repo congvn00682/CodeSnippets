@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>coreDataFetchedResultsController</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>var fetchedResultsController: NSFetchedResultsController&lt;Person&gt; {
+        if _fetchedResultsController != nil {
+            return _fetchedResultsController!
+        }
+        
+        let fetchRequest: NSFetchRequest&lt;Person&gt; = Person.fetchRequest()
+        
+        fetchRequest.fetchBatchSize = 20
+        
+        let namePerson = NSSortDescriptor(key: "name", ascending: false)
+        fetchRequest.sortDescriptors = [namePerson]
+        
+        
+        _fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: AppDelegate.context, sectionNameKeyPath: nil, cacheName: "Master")
+        
+        do {
+            try _fetchedResultsController!.performFetch()
+        } catch {
+            
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+        
+        return _fetchedResultsController!
+    }
+    private var _fetchedResultsController: NSFetchedResultsController&lt;Person&gt;?
+    
+    func saveContext() {
+        guard let context = _fetchedResultsController?.managedObjectContext else { return }
+        do {
+            try context.save()
+        } catch {
+            
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+    }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>1D23FF7C-6AA7-460A-AECB-AB97EA02145C</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Fetched Results Controller in Core Data at DataServices</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>
