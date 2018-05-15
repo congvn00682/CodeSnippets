@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>get Data Login Facebook</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>func getDataLogin() {
+        if FBSDKAccessToken.current() != nil {
+            // lay gia tri (id: co the hien thi anh, name, email) cua fb sau khi login thanh cong
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"]).start(completionHandler: {
+                (connect, result, err) in
+                if err == nil {
+                    // luu cac gia tri vao 1 Dictionary
+                    let dict = result as! Dictionary&lt;String, Any&gt;
+                    print("Info \(dict)")
+                    // lay cac gia tri de co the luu thong tin or hien thi
+                    let linkId: String = dict["id"] as! String
+                    let linkName: String = dict["name"] as! String
+                    let linkEmail: String = dict["email"] as! String
+                }
+            })
+        }
+    }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>687348D4-24CB-4A4E-BDCC-9D375593C86A</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>get info Login Facebook at View Controller</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

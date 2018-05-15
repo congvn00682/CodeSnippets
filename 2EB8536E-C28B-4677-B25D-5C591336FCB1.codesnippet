@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>get fbLogin</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>func fbLogin() {
+        fbLoginManager.logIn(withReadPermissions: ["email"], from: self) {
+            (result, err) in
+            if (err == nil) {
+                print("Loginn Successfully !")
+                let fbLoginResult: FBSDKLoginManagerLoginResult = result!
+                if fbLoginResult.grantedPermissions != nil {
+                    self.getDataLogin()
+                }
+                
+            }else{
+                print("Login Failed")
+            }
+        }
+    }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>2EB8536E-C28B-4677-B25D-5C591336FCB1</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>fbLoginManager at View Controller</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
