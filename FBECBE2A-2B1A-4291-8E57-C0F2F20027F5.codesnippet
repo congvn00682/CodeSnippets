@@ -3,14 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>get CTView</string>
+	<string>get CTButton</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>@IBDesignable class CTView: UIView {
-    
+	<string>@IBDesignable class CTButton: UIButton {
     @IBInspectable var cornerRadius: CGFloat = 0 {
         didSet {
             self.layer.cornerRadius = cornerRadius
@@ -28,15 +27,16 @@
             self.layer.borderColor = borderColor?.cgColor
         }
     }
+    
 }</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>F052557B-F381-4AA8-8465-91E1A2CDC3AA</string>
+	<string>FBECBE2A-2B1A-4291-8E57-C0F2F20027F5</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetPlatformFamily</key>
 	<string>iphoneos</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>get CustomUIView</string>
+	<string>get Custom Button</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

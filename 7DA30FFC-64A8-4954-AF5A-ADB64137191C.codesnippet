@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>get CTView</string>
+	<string>get CTScrollView</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>@IBDesignable class CTView: UIView {
+	<string>@IBDesignable class CTScrollView: UIScrollView {
     
     @IBInspectable var cornerRadius: CGFloat = 0 {
         didSet {
@@ -30,16 +30,16 @@
     }
 }</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>F052557B-F381-4AA8-8465-91E1A2CDC3AA</string>
+	<string>7DA30FFC-64A8-4954-AF5A-ADB64137191C</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetPlatformFamily</key>
 	<string>iphoneos</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>get CustomUIView</string>
+	<string>get Custom ScrollView</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
-	<integer>2</integer>
+	<integer>0</integer>
 </dict>
 </plist>

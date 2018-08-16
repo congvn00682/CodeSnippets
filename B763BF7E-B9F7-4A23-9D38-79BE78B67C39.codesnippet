@@ -3,40 +3,28 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>get CTView</string>
+	<string>get TapGesture</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>@IBDesignable class CTView: UIView {
-    
-    @IBInspectable var cornerRadius: CGFloat = 0 {
-        didSet {
-            self.layer.cornerRadius = cornerRadius
-            self.layer.masksToBounds = cornerRadius &gt; 0
-        }
+	<string>override func viewDidLoad() {
+        super.viewDidLoad()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapGesture(recognizer:)))
+        self.view.addGestureRecognizer(tap)
     }
-    
-    @IBInspectable var borderWidth: CGFloat = 0 {
-        didSet {
-            self.layer.borderWidth = borderWidth
-        }
-    }
-    @IBInspectable var borderColor: UIColor? {
-        didSet {
-            self.layer.borderColor = borderColor?.cgColor
-        }
-    }
-}</string>
+    @objc func tapGesture(recognizer: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>F052557B-F381-4AA8-8465-91E1A2CDC3AA</string>
+	<string>B763BF7E-B9F7-4A23-9D38-79BE78B67C39</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetPlatformFamily</key>
 	<string>iphoneos</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>get CustomUIView</string>
+	<string>Hidden keyboard when click space</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

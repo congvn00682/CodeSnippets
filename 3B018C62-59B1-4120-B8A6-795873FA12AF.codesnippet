@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>get CTView</string>
+	<string>get CTTextField</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>@IBDesignable class CTView: UIView {
+	<string>@IBDesignable class CTTextField: UITextField {
     
     @IBInspectable var cornerRadius: CGFloat = 0 {
         didSet {
@@ -27,16 +27,15 @@
         didSet {
             self.layer.borderColor = borderColor?.cgColor
         }
-    }
-}</string>
+    }</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>F052557B-F381-4AA8-8465-91E1A2CDC3AA</string>
+	<string>3B018C62-59B1-4120-B8A6-795873FA12AF</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetPlatformFamily</key>
 	<string>iphoneos</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>get CustomUIView</string>
+	<string>get Custom TextField</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
