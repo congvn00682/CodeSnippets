@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>createTextViewCellDelegate</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>import UIKit
+
+fileprivate let TextViewCellHorizontalOffset:CGFloat = 15.0
+fileprivate let TextViewCellVerticalOffset:CGFloat = 11.0
+
+@objc protocol TextViewCellDelegate: NSObjectProtocol {
+    
+    @objc optional func textViewCell(_ cell:TextViewCell, didChangedWithText text:String)
+    @objc optional func textViewCellDidBeginEditing(_ cell:TextViewCell, notification: Notification)
+    @objc optional func textViewCellDidEndEditing(_ cell:TextViewCell, notification: Notification)
+    
+}
+
+class TextViewCell: UITableViewCell {
+    
+    var isEmtyValue = true
+    var placeHolder : String?
+    var textView:UITextView?
+    var textViewInputAccessoryView:UIToolbar?
+    var delegate:TextViewCellDelegate?
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        self.textView = UITextView(frame: CGRect.zero)
+        self.textView?.delegate = self
+        self.textView?.font = UIFont.systemFont(ofSize: 17.0)
+        self.textView?.backgroundColor = UIColor.clear
+        self.textView?.textContainerInset = UIEdgeInsets.zero;
+        self.addSubview(self.textView!)
+        
+        self.textViewInputAccessoryView = UIToolbar(frame: CGRect.zero)
+        let toolBarSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let toolBarDone = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(TextViewCell.doneTapped(_:)))
+        
+        self.textViewInputAccessoryView?.items = [toolBarSpace, toolBarDone]
+        
+        self.textView?.inputAccessoryView = self.textViewInputAccessoryView
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(TextViewCell.keyboardWillShow(_:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TextViewCell.keyboardWillHide(_:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.updateLayout()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            if self.isEmtyValue {
+                self.textView?.textColor = UIColor.lightGray
+                self.textView?.text = "コメント"
+            }else {
+                self.textView?.textColor = UIColor.white
+            }
+        }
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+
+}
+
+// MARK: - Layout
+
+extension TextViewCell {
+    
+    fileprivate func updateLayout() {
+        
+        guard let textView = self.textView else {
+            return
+        }
+        
+        guard let textViewInputAccessoryView = self.textViewInputAccessoryView else {
+            return
+        }
+        
+        let textViewRect = CGRect(
+            x: TextViewCellHorizontalOffset,
+            y: TextViewCellVerticalOffset,
+            width: self.frame.width - (TextViewCellHorizontalOffset * 2),
+            height: self.frame.height - (TextViewCellVerticalOffset * 2)
+        )
+        
+        textView.frame = textViewRect
+        
+        
+        let textViewInputAccessoryViewRect = CGRect(
+            x: 0,
+            y: 0,
+            width: self.frame.width,
+            height: 44
+        )
+        
+        textViewInputAccessoryView.frame = textViewInputAccessoryViewRect
+        
+        
+    }
+    
+}
+
+// MARK: - Actions
+
+extension TextViewCell {
+    
+    @objc func doneTapped(_ sender:AnyObject) {
+        
+        self.textView?.resignFirstResponder()
+        
+    }
+    
+}
+
+// MARK: - UITextViewDelegate
+
+extension TextViewCell: UITextViewDelegate {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.textColor = UIColor.white
+            textView.text = ""
+        }
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text == "" {
+            textView.text = "コメント"
+            textView.textColor = UIColor.lightGray
+        }else{
+            textView.textColor = UIColor.white
+        }
+    }
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -&gt; Bool {
+        
+        guard let string = textView.text  else {
+            return true
+        }
+        
+        let newString = (string as NSString).replacingCharacters(in: range, with: text)
+        
+        if let delegate = self.delegate {
+            if delegate.responds(to: #selector(TextViewCellDelegate.textViewCell(_:didChangedWithText:))) {
+                delegate.textViewCell!(self, didChangedWithText: newString)
+            }
+        }
+        
+        return true
+
+        
+    }
+    
+}
+
+// MARK: - Notifications
+
+extension TextViewCell {
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        
+        guard let textView = self.textView else {
+            return
+        }
+        
+        if !textView.isFirstResponder {
+            return
+        }
+        
+        if let delegate = self.delegate {
+            if delegate.responds(to: #selector(TextViewCellDelegate.textViewCellDidBeginEditing(_:notification:))) {
+                delegate.textViewCellDidBeginEditing!(self, notification: notification)
+            }
+        }
+        
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        
+        guard let textView = self.textView else {
+            return
+        }
+        
+        if !textView.isFirstResponder {
+            return
+        }
+        
+        if let delegate = self.delegate {
+            if delegate.responds(to: #selector(TextViewCellDelegate.textViewCellDidEndEditing(_:notification:))) {
+                delegate.textViewCellDidEndEditing!(self, notification: notification)
+            }
+        }
+        
+    }
+    
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>7A10068F-8314-4F73-B88A-CCB35CFA94D5</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Create Text View Cell Delegate</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

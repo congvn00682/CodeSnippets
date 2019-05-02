@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>getPopup</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        //Transparent background
+        self.providesPresentationContextTransitionStyle = true
+        self.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+    }
+    
+    func showAnimate() {
+        self.view.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+        self.view.alpha = 0.0;
+        UIView.animate(withDuration: 0.3, animations: {
+            self.view.alpha = 1.0
+            self.view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        })
+    }</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>FBC70924-E494-40B0-B287-3992D4C7D2D4</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Create Popup Action</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

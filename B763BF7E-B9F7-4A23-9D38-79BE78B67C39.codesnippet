@@ -3,20 +3,19 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>get TapGesture</string>
+	<string>tapGesture</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>override func viewDidLoad() {
-        super.viewDidLoad()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tapGesture(recognizer:)))
-        self.view.addGestureRecognizer(tap)
-    }
-    @objc func tapGesture(recognizer: UITapGestureRecognizer) {
-        self.view.endEditing(true)
-    }</string>
+	<string>
+let tap = UITapGestureRecognizer(target: self, action: #selector(tapGesture(recognizer:)))
+self.view.addGestureRecognizer(tap)
+
+@objc func tapGesture(recognizer: UITapGestureRecognizer) {
+    self.view.endEditing(true)
+}</string>
 	<key>IDECodeSnippetIdentifier</key>
 	<string>B763BF7E-B9F7-4A23-9D38-79BE78B67C39</string>
 	<key>IDECodeSnippetLanguage</key>

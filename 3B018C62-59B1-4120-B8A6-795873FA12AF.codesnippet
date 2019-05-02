@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>get CTTextField</string>
+	<string>CTTextField</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
@@ -27,7 +27,8 @@
         didSet {
             self.layer.borderColor = borderColor?.cgColor
         }
-    }</string>
+    }
+}</string>
 	<key>IDECodeSnippetIdentifier</key>
 	<string>3B018C62-59B1-4120-B8A6-795873FA12AF</string>
 	<key>IDECodeSnippetLanguage</key>
@@ -35,7 +36,7 @@
 	<key>IDECodeSnippetPlatformFamily</key>
 	<string>iphoneos</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>get Custom TextField</string>
+	<string>Custom TextField</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

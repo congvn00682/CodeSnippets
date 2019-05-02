@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>getTextFieldCellDelegate</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>extension Controller: TextFieldCellDelegate {
+    
+    func textFieldCellDidBeginEditing(_ cell: TextFieldCell, notification: Notification) {
+        
+        guard let userInfo = notification.userInfo else {
+            return
+        }
+        
+        if let keyboardRectValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            
+            let keyboardRect = keyboardRectValue.cgRectValue
+            
+            self.tableView?.tableFooterView = UIView(frame: CGRect(origin: CGPoint.zero, size: keyboardRect.size))
+            
+            if let indexPath = self.tableView?.indexPath(for: cell) {
+                self.tableView?.scrollToRow(at: indexPath, at: .top, animated: true)
+            }
+            
+        }
+        
+    }
+    
+    func textFieldCellWillEndEditing(_ cell: TextFieldCell) {
+        
+        if let indexPath = self.tableView?.indexPath(for: cell) {
+            self.tableView?.reloadRows(at: [indexPath], with: .none)
+        }
+        
+    }
+    
+    func textFieldCellDidEndEditing(_ cell: TextFieldCell, notification: Notification) {
+        
+        self.tableView?.tableFooterView = nil
+        
+    }
+    
+    func textFieldCell(_ cell: TextFieldCell, didChangedWithText text: String) {
+        
+        guard let indexPath = self.tableView?.indexPath(for: cell) else {
+            return
+        }
+        if indexPath.section == 0 {
+            
+            if indexPath.row == 3 {
+                
+               
+            }
+        }
+    }
+    
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>A1770F90-6D27-487D-8AD9-51914BB85EEE</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>textField Cell Delegate</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>createTextFieldCellDelegate</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>import UIKit
+
+fileprivate let TextFieldCellHorizontalOffset:CGFloat = 15.0
+fileprivate let TextFieldCellVerticalOffset:CGFloat = 11.0
+
+@objc protocol TextFieldCellDelegate: NSObjectProtocol {
+    
+    @objc optional func textFieldCell(_ cell:TextFieldCell, didChangedWithText text:String)
+    @objc optional func textFieldCellDidBeginEditing(_ cell:TextFieldCell, notification: Notification)
+    @objc optional func textFieldCellWillEndEditing(_ cell:TextFieldCell)
+    @objc optional func textFieldCellDidEndEditing(_ cell:TextFieldCell, notification: Notification)
+    
+}
+
+class TextFieldCell: UITableViewCell {
+
+    var titleLabel:UILabel?
+    var textField:UITextField?
+    var delegate:TextFieldCellDelegate?
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    
+        self.titleLabel = UILabel(frame: CGRect.zero)
+        self.titleLabel?.font = UIFont.systemFont(ofSize: 17.0)
+        self.addSubview(self.titleLabel!)
+
+        self.textField = UITextField(frame: CGRect.zero)
+        self.textField?.delegate = self
+        self.textField?.font = UIFont.systemFont(ofSize: 17.0)
+        self.textField?.textAlignment = .right
+        self.addSubview(self.textField!)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(TextFieldCell.keyboardWillShow(_:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TextFieldCell.keyboardWillHide(_:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.updateLayout()
+        
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        if selected {
+        
+            self.textField?.becomeFirstResponder()
+
+        }
+        
+    }
+
+}
+
+// MARK: - Layout
+
+extension TextFieldCell {
+    
+    fileprivate func updateLayout() {
+        
+        var horizontalOffset:CGFloat = 0
+        
+        guard let titleLabel = self.titleLabel  else {
+            return
+        }
+
+        guard let textField = self.textField  else {
+            return
+        }
+
+        
+        if let titleTextFoundingRect = titleLabel.attributedText?.boundingRect(
+            with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude),
+            options: [NSStringDrawingOptions.usesLineFragmentOrigin],
+            context: nil) {
+            
+            let width = min(round((self.frame.width - (TextFieldCellHorizontalOffset * 2)) * 0.7), round(titleTextFoundingRect.width) + 1)
+            
+            let titleLabelRect = CGRect(
+                x: TextFieldCellHorizontalOffset,
+                y: TextFieldCellVerticalOffset,
+                width: width,
+                height: self.frame.height - (TextFieldCellVerticalOffset * 2)
+            )
+            
+            horizontalOffset += titleLabelRect.origin.x + titleLabelRect.width
+            
+            titleLabel.frame = titleLabelRect
+            
+        } else {
+            
+            titleLabel.frame = CGRect.zero
+            
+        }
+        
+        let width = (horizontalOffset == 0) ? self.frame.width - (TextFieldCellHorizontalOffset * 2) : self.frame.width - horizontalOffset - (TextFieldCellHorizontalOffset * 2)
+        
+        let textFieldRect = CGRect(
+            x: horizontalOffset + TextFieldCellHorizontalOffset,
+            y: TextFieldCellVerticalOffset,
+            width: width,
+            height: self.frame.height - (TextFieldCellVerticalOffset * 2)
+        )
+        
+        textField.frame = textFieldRect
+        
+    }
+    
+}
+
+// MARK: - UITextFieldDelegate
+
+extension TextFieldCell:UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -&gt; Bool {
+        if textField.text != "" {
+            textField.text = ""
+        }
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -&gt; Bool {
+        
+        textField.resignFirstResponder()
+        
+        return false
+        
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -&gt; Bool {
+
+        guard let text = textField.text  else {
+            return true
+        }
+        
+        let newString = (text as NSString).replacingCharacters(in: range, with: string)
+
+        if let delegate = self.delegate {
+            if delegate.responds(to: #selector(TextFieldCellDelegate.textFieldCell(_:didChangedWithText:))) {
+                delegate.textFieldCell!(self, didChangedWithText: newString)
+            }
+        }
+        
+        return true
+        
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        if let delegate = self.delegate {
+            if delegate.responds(to: #selector(TextFieldCellDelegate.textFieldCellWillEndEditing(_:))) {
+                delegate.textFieldCellWillEndEditing!(self)
+            }
+        }
+        
+    }
+    
+}
+
+// MARK: - Notifications
+
+extension TextFieldCell {
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        
+        guard let textField = self.textField else {
+            return
+        }
+        
+        if !textField.isFirstResponder {
+            return
+        }
+        
+        if let delegate = self.delegate {
+            if delegate.responds(to: #selector(TextFieldCellDelegate.textFieldCellDidBeginEditing(_:notification:))) {
+                delegate.textFieldCellDidBeginEditing!(self, notification: notification)
+            }
+        }
+        
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+
+        guard let textField = self.textField else {
+            return
+        }
+        
+        if !textField.isFirstResponder {
+            return
+        }
+        
+        if let delegate = self.delegate {
+            if delegate.responds(to: #selector(TextFieldCellDelegate.textFieldCellDidEndEditing(_:notification:))) {
+                delegate.textFieldCellDidEndEditing!(self, notification: notification)
+            }
+        }
+
+    }
+    
+}
+</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>D846CA89-6014-4043-9BC5-B1B25080E844</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Create Text Field Cell Delegate</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

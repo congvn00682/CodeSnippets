@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>getTextViewCellDelegate</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>// MARK: - TextViewCellDelegate
+extension Controller: TextViewCellDelegate {
+    
+    func textViewCellDidBeginEditing(_ cell: TextViewCell, notification: Notification) {
+        
+        guard let userInfo = notification.userInfo else {
+            return
+        }
+        
+        if let keyboardRectValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            
+            let keyboardRect = keyboardRectValue.cgRectValue
+            
+            self.tableView?.tableFooterView = UIView(frame: CGRect(origin: CGPoint.zero, size: keyboardRect.size))
+            
+            if let indexPath = self.tableView?.indexPath(for: cell) {
+                self.tableView?.scrollToRow(at: indexPath, at: .top, animated: true)
+            }
+            
+        }
+        
+    }
+    
+    func textViewCellDidEndEditing(_ cell: TextViewCell, notification: Notification) {
+        
+        self.tableView?.tableFooterView = nil
+        
+    }
+    
+    func textViewCell(_ cell: TextViewCell, didChangedWithText text: String) {
+        
+        guard let indexPath = self.tableView?.indexPath(for: cell) else {
+            return
+        }
+        
+        if indexPath.section == 1 {
+            
+            if indexPath.row == 0 {
+                
+                
+            }
+        }
+    }
+    
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>7B3103AE-290D-4D9D-82CA-39CF6773A6D1</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Text View Cell Delegate</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

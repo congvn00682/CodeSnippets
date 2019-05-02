@@ -3,40 +3,24 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>CTView</string>
+	<string>getDelegateComeBack</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>@IBDesignable class CTView: UIView {
-    
-    @IBInspectable var cornerRadius: CGFloat = 0 {
-        didSet {
-            self.layer.cornerRadius = cornerRadius
-            self.layer.masksToBounds = cornerRadius &gt; 0
-        }
-    }
-    
-    @IBInspectable var borderWidth: CGFloat = 0 {
-        didSet {
-            self.layer.borderWidth = borderWidth
-        }
-    }
-    @IBInspectable var borderColor: UIColor? {
-        didSet {
-            self.layer.borderColor = borderColor?.cgColor
-        }
-    }
-}</string>
+	<string>self.dismiss(animated: false, completion: {
+                    [weak self]() -&gt; Void in
+                    self?.delegate?.didFinishedInPreparingShipmentController()
+                })</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>F052557B-F381-4AA8-8465-91E1A2CDC3AA</string>
+	<string>67AA06F5-ABAA-4E33-9A97-1069BC562C88</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetPlatformFamily</key>
 	<string>iphoneos</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>Custom View</string>
+	<string>Delegate Come back</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
