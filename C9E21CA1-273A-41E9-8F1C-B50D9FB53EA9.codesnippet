@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>realmSaveObject</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>func getMasterBy&lt;T: Object, K&gt;(id: K, type: T.Type) -&gt; T? {
+    let realm = try! Realm()
+    let occu = realm.object(ofType: type, forPrimaryKey: id)
+    return occu
+}
+
+func saveObject(object: ObjectModel) {
+    let helper = MasterHelper.sharedInstance()
+    let realm = try! Realm()
+    try! realm.write {
+        object.childObject = helper.getMasterBy(id: object.idObject, type: ObjectModel.self)
+        object.childObjec = helper.getMasterBy(id: object.idObject, type: ObjectModel.self)
+        realm.add(object, update: true)
+    }
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>C9E21CA1-273A-41E9-8F1C-B50D9FB53EA9</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>realm save Object with child Object</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>

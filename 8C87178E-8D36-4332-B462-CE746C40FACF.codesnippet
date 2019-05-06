@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>alamofireCreateClassObject</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>class ObjectAPI: BaseAPI {
+    let urlNameApi = "donations?state=%i&amp;offset=%i&amp;limit=%i&amp;type=%i"
+    let urlNameApi = "donations?state=%i&amp;offset=%i&amp;limit=%i"
+    let urlNameApi = "donation_reports"
+    let urlNameApi = "donation_reports/%i"
+    
+    static var instance: ObjectAPI = ObjectAPI()
+    static func sharedInstance() -&gt; ObjectAPI {
+        return instance
+    }
+    
+    func objectList(offset: Int, limit: Int, state: Int,type: ObjectType, resultHandler: @escaping (Alamofire.Result&lt;Any&gt;) -&gt; Void) {
+        var urlString = urlBase
+        if type == ObjectType {
+            urlString +=  String(format: urlNameApi, state, offset, limit)
+        } else {
+            urlString +=  String(format: urlNameApi, state, offset, limit, type.rawValue)
+        }
+        sessionManager.request(urlString).validate().responseArray() { (response: DataResponse&lt;[ObjectModel]&gt;) in
+            switch response.result {
+            case .success(let value):
+                let objectHelper = ObjectHelper.sharedInstance()
+                objectHelper.saveObjects(donations: value as [ObjectModel]!)
+
+                resultHandler(.success(value))
+                break
+            case .failure(let error):
+                resultHandler(.failure(error))
+                log._error("error from server: \(error)")
+                _ = self.decodeErrorModel(data: response.data)
+                break
+            }
+        }
+    }
+    
+    func getObjectTotal(state : Int, typeId : Int, resultHandler: @escaping (Alamofire.Result&lt;Any&gt;) -&gt; Void){
+        let urlString = urlBase + String(format: urlNameApi, state, typeId)
+        sessionManager.request(urlString).validate().responseObject(){ (response: DataResponse&lt;ObjectModel&gt;) in
+            
+            switch response.result {
+            case .success(let value):
+                resultHandler(.success(value))
+                break
+            case .failure(let error):
+                resultHandler(.failure(error))
+                log._error("error from server: \(error)")
+                _ = self.decodeErrorModel(data: response.data)
+                break
+            }
+        }
+    }
+    
+    func searchObjectList(offset: Int, limit: Int, type: ObjectType, data: ObjectSearchModel, resultHandler: @escaping (Alamofire.Result&lt;Any&gt;) -&gt; Void) {
+        var params = data.toParameters()
+        params["offset"] = offset
+        params["limit"] = limit
+        if type != ObjectType.all {
+            params["type"] = type.rawValue
+        }
+        sessionManager.request(urlBase + urlNameApi, parameters: params).validate().responseArray() { (response: DataResponse&lt;[ObjectModel]&gt;) in
+            switch response.result {
+            case .success(let value):
+                resultHandler(.success(value))
+                break
+            case .failure(let error):
+                resultHandler(.failure(error))
+                log._error("error from server: \(error)")
+                _ = self.decodeErrorModel(data: response.data)
+                break
+            }
+        }
+    }
+    
+    
+    func objectList(searching: Bool, offset: Int, limit: Int, state: Int, type: ObjectType, data: ObjectSearchModel?, resultHandler: @escaping (Alamofire.Result&lt;Any&gt;) -&gt; Void) {
+        if searching {
+            searchObjectList(offset: offset, limit: limit, type: type, data: data!, resultHandler: resultHandler)
+        } else {
+            getObjectList(offset: offset, limit: limit, state: state, type: type, resultHandler: resultHandler)
+        }
+    }
+    
+    func getObjectDetails(id: Int, resultHandler: @escaping (Alamofire.Result&lt;Any&gt;) -&gt; Void) {
+        let urlString = urlBase + String(format: urlNameApi, id)
+        sessionManager.request(urlString).validate().responseObject() { (response: DataResponse&lt;ObjectModel&gt;) in
+            switch response.result {
+            case .success(let value):
+                resultHandler(.success(value))
+                break
+            case .failure(let error):
+                resultHandler(.failure(error))
+                log._error("error from server: \(error)")
+                _ = self.decodeErrorModel(data: response.data)
+                break
+            }
+        }
+    }
+    
+    func deleteObjectBy(id: Int, resultHandler: @escaping (Alamofire.Result&lt;Any&gt;) -&gt; Void) {
+        let urlString = urlBase + String(format: urlNameApi, id)
+        sessionManager.request(urlString, method: .delete).validate().responseData { (response: DataResponse&lt;Data&gt;) in
+            switch response.result {
+            case .success(let value):
+                resultHandler(.success(value))
+                break
+            case .failure(let error):
+                resultHandler(.failure(error))
+                log._error("error from server: \(error)")
+                _ = self.decodeErrorModel(data: response.data)
+                break
+            }
+        }
+    }
+    
+    func createObject(object: ObjectModel, resultHandler: @escaping (Alamofire.Result&lt;Any&gt;) -&gt; Void) {
+        let date = String(object.year)+"-"+String(object.month)+"-"+String(object.day)
+        sessionManager.upload(multipartFormData: { multipartFormData in
+            multipartFormData.append("2".data(using: .utf8)!, withName: "type")
+            multipartFormData.append(String(format: "%i", object.typeId).data(using: .utf8)!, withName: "donation_type_id")
+            multipartFormData.append(date.data(using: .utf8)!, withName: "donation_date")
+            multipartFormData.append(String(format: "%i", object.amount).data(using: .utf8)!, withName: "amount")
+            multipartFormData.append(String(format: "%i", object.totalNumber).data(using: .utf8)!, withName: "total_number")
+        }, to: urlBase + urlNameApi) { encodingResult in
+            switch encodingResult {
+            case .success(let upload, _, _):
+                upload.validate().responseObject() { (response: DataResponse&lt;DonationModel&gt;) in
+                    switch response.result {
+                    case .success(let value):
+                        resultHandler(.success(value))
+                        break
+                    case .failure(let error):
+                        resultHandler(.failure(error))
+                        log._error("error from server: \(error)")
+                        _ = self.decodeErrorModel(data: response.data)
+                        break
+                    }
+                }
+                break
+            case .failure(let encodingError):
+                resultHandler(.failure(encodingError))
+            }
+        }
+    }
+    
+    
+    func updateObject(object: ObjectModel, resultHandler: @escaping (Alamofire.Result&lt;Any&gt;) -&gt; Void) {
+        let formatter = DateFormatter.dateServerFormatter()
+        
+        var parameters: Parameters = [
+            "donation_class_id": object.classId,
+            "company_name" : object.companyName,
+            "representative_name" : object.representativeName,
+            "address" : object.address,
+            "amount" : object.amount,
+            "total_number" : object.totalNumber
+        ]
+        
+        if let date = formatter.date(from: String(object.year)+"-"+String(object.month)+"-"+String(object.day)) {
+            parameters["donation_date"] = formatter.string(from: date)
+        }
+        if object.childObjectId &gt; 0 {
+            parameters["occupation_id"] = object.childObjectId
+        }
+        if object.deduction {
+            parameters["deduction"] = "1"
+        } else {
+            parameters["deduction"] = "0"
+        }
+        let urlString = urlBase + String(format: urlNameApi, object.id)
+        sessionManager.request(urlString, method: .put, parameters: parameters).validate().responseObject() { (response: DataResponse&lt;DonationModel&gt;) in
+            switch response.result {
+            case .success(let value):
+                resultHandler(.success(value))
+                break
+            case .failure(let error):
+                log._error("error from server: \(error)")
+                _ = self.decodeErrorModel(data: response.data)
+                resultHandler(.failure(error))
+                break
+            }
+        }
+    }
+    
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>8C87178E-8D36-4332-B462-CE746C40FACF</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>alamofire create class ObjectApi full Function</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>

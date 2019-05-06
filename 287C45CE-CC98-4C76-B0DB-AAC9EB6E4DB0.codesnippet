@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>realmFilterObject</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>func filter(by state: Condinational!) -&gt; [ObjectItemModel] {
+    let realm = try! Realm()
+    let items = realm.objects(ObjectModel.self).filter(NSPredicate(format: "state = %i", state.rawValue))
+    
+    let listSorted = items.sorted { (don1: ObjectModel, don2: ObjectModel) -&gt; Bool in
+        let result = don1.getDisplayDate().compare(don2.getDisplayDate())
+        if result == ComparisonResult.orderedAscending {
+            return false
+        } else if result == ComparisonResult.orderedDescending {
+            return true
+        } else {
+            return don1.id &gt; don2.id
+        }
+    }
+    var list: [ObjectItemModel] = []
+    var current: ObjectItemModel?
+    var date = Date(timeIntervalSince1970: 0)
+    
+    for donation in listSorted {
+        if Calendar.current.compare(donation.getDisplayDate(), to: date, toGranularity: Calendar.Component.day) != ComparisonResult.orderedSame {
+            current = DonationItemModel()
+            current?.total = 0
+            current!.donations = []
+            current!.date = donation.getDisplayDate()
+            date = donation.getDisplayDate()
+            list.append(current!)
+        }
+        current!.donations?.append(donation)
+        current!.total! += donation.amount
+    }
+    
+    return list
+}
+</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>287C45CE-CC98-4C76-B0DB-AAC9EB6E4DB0</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>realm filter Object</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

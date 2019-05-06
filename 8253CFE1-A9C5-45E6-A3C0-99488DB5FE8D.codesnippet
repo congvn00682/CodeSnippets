@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>realmSaveArrayObjects</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>func getMasterBy&lt;T: Object, K&gt;(id: K, type: T.Type) -&gt; T? {
+    let realm = try! Realm()
+    let occu = realm.object(ofType: type, forPrimaryKey: id)
+    return occu
+}
+
+func saveObjects(objects: [ObjectModel]) {
+    let helper = MasterHelper.sharedInstance()
+    let realm = try! Realm()
+    try! realm.write {
+        for item in objects {
+            item.childObject = helper.getMasterBy(id: item.id, type: ObjectModel.self)
+            item.childObject = helper.getMasterBy(id: item.id, type: ObjectModel.self)
+            realm.add(item, update: true)
+        }
+    }
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>8253CFE1-A9C5-45E6-A3C0-99488DB5FE8D</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>realm save Objects with child Object</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
