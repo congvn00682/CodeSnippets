@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>getImageCache</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>import UIKit
+
+class ImageCache: NSObject {
+    static var sharedInstance = ImageCache()
+    
+    fileprivate var imageMap = [String: UIImage]()
+    
+    fileprivate override init() {
+        super.init()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ImageCache.onLowMemory), name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func onLowMemory() {
+        imageMap.removeAll(keepingCapacity: true)
+    }
+    
+    func get(_ name: String) -&gt; UIImage? {
+        return imageMap[name]
+    }
+    
+    func put(name: String, image: UIImage) {
+        imageMap[name] = image
+    }
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>D7D0CB53-36C4-43C7-BA54-B2669A65D1D3</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>get image cache</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
