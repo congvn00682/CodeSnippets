@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string></string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>import Foundation
+import UIKit
+
+extension UILabel {
+}
+
+class LocalizableLabel: UILabel {
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setLocalizable()
+    }
+    
+    private func setLocalizable() {
+        guard let prevValue = self.text else { return }
+        self.text = prevValue.localized
+    }
+}
+
+class LocalizableButton: UIButton {
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setLocalizable()
+    }
+    
+    private func setLocalizable() {
+        guard let prevValue = self.titleLabel?.text else { return }
+        self.setTitle(prevValue.localized, for: .normal)
+    }
+}
+
+class LocalizableTextField: UITextField {
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setLocalizablePlaceholder()
+    }
+    
+    private func setLocalizablePlaceholder() {
+        guard let placeholderString = self.placeholder else {
+            return
+        }
+        self.placeholder = placeholderString.localized
+    }
+}
+</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>6FEFCE9B-A980-470F-B929-2867FDA3DE0E</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>getLocalizableExtension</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Localizable Extension</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

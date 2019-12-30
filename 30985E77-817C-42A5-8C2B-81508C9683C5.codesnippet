@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string></string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>extension UIView {
+    
+    // Example use: myView.addBorder(toSide: .Left, withColor: UIColor.redColor().CGColor, andThickness: 1.0)
+    
+    enum ViewSide: String {
+        case Left = "Left", Right = "Right", Top = "Top", Bottom = "Bottom"
+    }
+    
+    func addBorder(toSide side: ViewSide, withColor color: CGColor, andThickness thickness: CGFloat) {
+        
+        let border = CALayer()
+        border.borderColor = color
+        border.name = side.rawValue
+        switch side {
+        case .Left: border.frame = CGRect(x: 0, y: 0, width: thickness, height: frame.height)
+        case .Right: border.frame = CGRect(x: frame.width - thickness, y: 0, width: thickness, height: frame.height)
+        case .Top: border.frame = CGRect(x: 0, y: 0, width: frame.width, height: thickness)
+        case .Bottom: border.frame = CGRect(x: 0, y: frame.height - thickness, width: frame.width, height: thickness)
+        }
+        
+        border.borderWidth = thickness
+        
+        layer.addSublayer(border)
+    }
+    
+    func removeBorder(toSide side: ViewSide) {
+        guard let sublayers = self.layer.sublayers else { return }
+        var layerForRemove: CALayer?
+        for layer in sublayers {
+            if layer.name == side.rawValue {
+                layerForRemove = layer
+            }
+        }
+        if let layer = layerForRemove {
+            layer.removeFromSuperlayer()
+        }
+    }
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>30985E77-817C-42A5-8C2B-81508C9683C5</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string></string>
+	<key>IDECodeSnippetTitle</key>
+	<string>My Code Snippet</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>
