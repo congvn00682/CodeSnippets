@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string></string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>import UIKit
+
+extension UIViewController {
+    /**
+     Display dialog message with title is "Social Good" and "Ok" button
+     
+     ## This is simple dialog without action button callback and completion callback
+     
+     - parameter message: The message of dialog
+    */
+    func displayDialog(message: String) {
+        let alert = UIAlertController(
+            title: "Social Good",
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: "OK",
+                style: .cancel,
+                handler: { action in
+
+                }
+            )
+        )
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    /**
+     Add gesture to current view controller's view to dismiss keyboard
+     
+     ## This gesture will dismiss keyboard when user tap on anywhere outside keyboard
+    */
+    func addDismissKeyboardGesture()
+    {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: view,
+            action: #selector(UIView.endEditing)
+        )
+
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>905F1B04-01AA-4EBD-BE53-25BD1E32796A</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>viewController+extension</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>ViewController Extension</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

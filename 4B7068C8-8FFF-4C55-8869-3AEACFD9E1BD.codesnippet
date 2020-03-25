@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string></string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>import UIKit
+
+struct Constant {
+
+    struct Margin {
+
+        static let smaller: CGFloat = 2.0
+        static let small: CGFloat = 4.0
+        static let slightlySmall: CGFloat = 6.0
+        static let normal: CGFloat = 8.0
+        static let slightlyBig: CGFloat = 12.0
+        static let big: CGFloat = 16.0
+        static let bigger: CGFloat = 32.0
+        static let biggest: CGFloat = 64.0
+
+        // See: https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/adaptivity-and-layout
+        static let minimumTappableMargin: CGFloat = 44.0
+        static let mediumTappableMargin: CGFloat = 66.0
+    }
+
+    struct LineThickness {
+
+        static let thin: CGFloat = 0.5
+        static let normal: CGFloat = 1.0
+        static let thick: CGFloat = 2.0
+
+    }
+
+    struct Color {
+
+        static let black: UIColor = ColorGenerator.generateFrom8BitChannel(r: 33, g: 33, b: 33)
+        static let white: UIColor = ColorGenerator.generateFrom8BitChannel(r: 255, g: 255, b: 255)
+        static let whiteHighlighted: UIColor = ColorGenerator.generateFrom8BitChannel(r: 224, g: 224, b: 224)
+        static let sgLightBlue: UIColor = ColorGenerator.generateFrom8BitChannel(r: 100, g: 210, b: 221)
+        static let sgDarkBlue: UIColor = ColorGenerator.generateFrom8BitChannel(r: 21, g: 48, b: 124)
+        static let sgDarkBlueHighlighted: UIColor = ColorGenerator.generateFrom8BitChannel(r: 39, g: 90, b: 230)
+        static let red: UIColor = ColorGenerator.generateFrom8BitChannel(r: 255, g: 51, b: 42)
+        static let green: UIColor = ColorGenerator.generateFrom8BitChannel(r: 42, g: 201, b: 64)
+        static let gold: UIColor = ColorGenerator.generateFrom8BitChannel(r: 243, g: 202, b: 62)
+
+        static let subLabel: UIColor = ColorGenerator.generateFrom8BitChannel(r: 130, g: 130, b: 130)
+        static let borderColor: UIColor = ColorGenerator.generateFrom8BitChannel(r: 189, g: 189, b: 189)
+        static let subduedLabel: UIColor = ColorGenerator.generateFrom8BitChannel(r: 224, g: 224, b: 224)
+
+    }
+
+    struct Duration {
+
+        static let almostNone: TimeInterval = 0.0001
+        static let fast: TimeInterval = 0.15
+        static let normal: TimeInterval = 0.30
+        static let slow: TimeInterval = 0.60
+        static let slower: TimeInterval = 1.20
+
+        static var testRequestTime: TimeInterval {
+            let randomInterval = TimeInterval.random(in: 0.3..&lt;2.0)
+            return randomInterval
+        }
+
+    }
+
+    struct Opacity {
+
+        static let none: CGFloat = 0.0
+        static let thin: CGFloat = 0.3
+        static let half: CGFloat = 0.5
+        static let full: CGFloat = 1.0
+
+    }
+
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>4B7068C8-8FFF-4C55-8869-3AEACFD9E1BD</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>getConstant</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Constant</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

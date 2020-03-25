@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string></string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>struct ColorGenerator {
+
+    // This function is referenced from the following source:
+    // https://www.hackingwithswift.com/example-code/uicolor/how-to-convert-a-hex-color-to-a-uicolor
+    // Argument example: "#cc0066"
+    static func generate(hex: String) -&gt; UIColor {
+        let r: CGFloat
+        let g: CGFloat
+        let b: CGFloat
+
+        if hex.hasPrefix("#") {
+            let start = hex.index(hex.startIndex, offsetBy: 1)
+            let hexColor = String(hex[start...])
+
+            if hexColor.count == 6 {
+                let scanner = Scanner(string: hexColor)
+                var hexNumber: UInt64 = 0
+
+                if scanner.scanHexInt64(&amp;hexNumber) {
+                    r = CGFloat((hexNumber &amp; 0xff0000) &gt;&gt; 16) / 255
+                    g = CGFloat((hexNumber &amp; 0x00ff00) &gt;&gt; 8) / 255
+                    b = CGFloat(hexNumber &amp; 0x0000ff) / 255
+
+                    let color = UIColor(red: r, green: g, blue: b, alpha: 1.0)
+                    return color
+                }
+            }
+        }
+        return UIColor.clear
+    }
+
+    static func generateFrom8BitChannel(r: CGFloat, g: CGFloat, b: CGFloat) -&gt; UIColor {
+        let color = UIColor(red: r / 255.0, green: g / 255.0, blue: b / 255.0, alpha: 1.0)
+        return color
+    }
+
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>E5C8C51D-011F-4754-A6BC-AB39165A4A3A</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>getColorGenerator</string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Color Generator</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
