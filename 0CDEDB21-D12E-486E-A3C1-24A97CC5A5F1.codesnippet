@@ -3,15 +3,22 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>get Login Fb Manager</string>
+	<string>call Localizable </string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>let fbLoginManager: FBSDKLoginManager = FBSDKLoginManager()</string>
+	<string>extension String {
+    
+    func localized(args: [String] = []) -&gt; String {
+        let localizedString = NSLocalizedString(self, comment: "")
+        return String(format: localizedString, locale: .current, arguments: args)
+    }
+    
+}</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>4C4AF3A7-6719-4A19-81B3-3A1FAE6CCA32</string>
+	<string>0CDEDB21-D12E-486E-A3C1-24A97CC5A5F1</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetPlatformFamily</key>
@@ -19,7 +26,7 @@
 	<key>IDECodeSnippetSummary</key>
 	<string></string>
 	<key>IDECodeSnippetTitle</key>
-	<string>get Facebook Login Manager</string>
+	<string>call Localizable </string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

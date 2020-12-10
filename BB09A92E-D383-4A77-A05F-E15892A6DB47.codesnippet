@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>call ResourceGenerator</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>import UIKit
+
+struct ResourceGenerator {
+
+    static private var bundle: Bundle = Bundle()
+
+    static func setBundle(bundle: Bundle) {
+        self.bundle = bundle
+    }
+
+    static func generateImage(named: String, renderingMode: UIImage.RenderingMode? = nil) -&gt; UIImage? {
+        var image = UIImage(named: named, in: bundle, compatibleWith: nil)
+        if let renderingMode = renderingMode {
+            image = image?.withRenderingMode(renderingMode)
+        }
+        return image
+    }
+
+    static func generateViewController&lt;T: UIViewController&gt;(class: T.Type) -&gt; T {
+        let className = ClassNameGenerator.generate(class: T.self)
+        let vc = T.init(nibName: className, bundle: bundle)
+        return vc
+    }
+
+    static func generateNib&lt;T: UIView&gt;(class: T.Type) -&gt; UINib {
+        let className = ClassNameGenerator.generate(class: T.self)
+        let nib = UINib(nibName: className, bundle: bundle)
+        return nib
+    }
+
+    static func generateNibView&lt;T: UIView&gt;(owner: T) -&gt; UIView? {
+        let classType = type(of: owner)
+        let nib = generateNib(class: classType)
+        let instantiatedNib = nib.instantiate(withOwner: owner, options: nil)
+        let nibView = instantiatedNib.first as? UIView
+        return nibView
+    }
+
+}</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>BB09A92E-D383-4A77-A05F-E15892A6DB47</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetPlatformFamily</key>
+	<string>iphoneos</string>
+	<key>IDECodeSnippetSummary</key>
+	<string></string>
+	<key>IDECodeSnippetTitle</key>
+	<string>call ResourceGenerator</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

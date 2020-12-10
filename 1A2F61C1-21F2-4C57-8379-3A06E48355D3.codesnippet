@@ -3,23 +3,32 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>get Login Fb Manager</string>
+	<string></string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>let fbLoginManager: FBSDKLoginManager = FBSDKLoginManager()</string>
+	<string>struct ClassNameGenerator {
+
+    static func generate&lt;T: AnyObject&gt;(class: T.Type) -&gt; String {
+        let joinedBundleIDAndClassName = NSStringFromClass(T.self)
+        let bundleIDAndClassName = joinedBundleIDAndClassName.split(separator: ".")
+        let className = String(bundleIDAndClassName.last ?? "")
+        return className
+    }
+
+}</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>4C4AF3A7-6719-4A19-81B3-3A1FAE6CCA32</string>
+	<string>1A2F61C1-21F2-4C57-8379-3A06E48355D3</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetPlatformFamily</key>
 	<string>iphoneos</string>
 	<key>IDECodeSnippetSummary</key>
-	<string></string>
+	<string>Class name Generator</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>get Facebook Login Manager</string>
+	<string>Class name Generator</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
